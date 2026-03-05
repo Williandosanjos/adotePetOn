@@ -1,27 +1,30 @@
-package br.com.adotepeton.adotepeton.security;
+package br.com.adotepeton.adotepeton.service;
 
 import br.com.adotepeton.adotepeton.domain.entity.User;
 import br.com.adotepeton.adotepeton.domain.enums.Role;
 import br.com.adotepeton.adotepeton.domain.repository.UserRepository;
-import br.com.adotepeton.adotepeton.security.dto.AuthResponse;
-import br.com.adotepeton.adotepeton.security.dto.LoginRequest;
-import br.com.adotepeton.adotepeton.security.dto.RegisterRequest;
-import lombok.Builder;
+import br.com.adotepeton.adotepeton.dto.AuthResponse;
+import br.com.adotepeton.adotepeton.dto.LoginRequest;
+import br.com.adotepeton.adotepeton.dto.RegisterRequest;
+import br.com.adotepeton.adotepeton.exception.ResourceNotFoundException;
+import br.com.adotepeton.adotepeton.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
 @Service
 @RequiredArgsConstructor
-public class AuthService {
+public class UserService {
 
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+
 
     public AuthResponse register(RegisterRequest request) {
 
@@ -34,16 +37,15 @@ public class AuthService {
 
         repository.save(user);
 
-        String token = jwtService.generateToken(
+        String Bearer = jwtService.generateToken(
                 user.getEmail(),
-                user.getName()
+                user.getRole().name()
         );
 
-        return new AuthResponse(token);
+        return new AuthResponse(Bearer);
     }
 
     public AuthResponse login(LoginRequest request) {
-
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.email(),
@@ -51,14 +53,24 @@ public class AuthService {
                 )
         );
 
-        User user = repository.findByEmail(request.email())
+        User user =repository.findByEmail(request.email())
                 .orElseThrow();
 
-        String token = jwtService.generateToken(
+        String Bearer = jwtService.generateToken(
                 user.getEmail(),
-                user.getName()
+                user.getRole().name()
         );
-
-        return new AuthResponse(token);
+        return new AuthResponse(Bearer);
     }
+
+    public User Searchbyemail(String email) {
+        return repository.findByEmail(email).orElseThrow(
+                () -> new ResourceNotFoundException("Email não localizado " + email)
+        );
+    }
+
+   public void deleteUserEmail(String email) {
+        repository.deleteByEmail(email
+        );
+   }
 }

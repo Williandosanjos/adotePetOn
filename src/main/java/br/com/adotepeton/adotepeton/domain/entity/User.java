@@ -3,12 +3,7 @@ package br.com.adotepeton.adotepeton.domain.entity;
 import br.com.adotepeton.adotepeton.domain.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.spi.ToolProvider;
 
 @Builder
 @Entity
@@ -32,6 +27,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String phone;
 
     @Enumerated(EnumType.STRING)
