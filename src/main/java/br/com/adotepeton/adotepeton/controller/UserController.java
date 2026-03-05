@@ -1,9 +1,9 @@
 package br.com.adotepeton.adotepeton.controller;
 
 import br.com.adotepeton.adotepeton.domain.entity.User;
-import br.com.adotepeton.adotepeton.dto.AuthResponse;
-import br.com.adotepeton.adotepeton.dto.LoginRequest;
-import br.com.adotepeton.adotepeton.dto.RegisterRequest;
+import br.com.adotepeton.adotepeton.api.userDto.AuthResponse;
+import br.com.adotepeton.adotepeton.api.userDto.LoginRequest;
+import br.com.adotepeton.adotepeton.api.userDto.RegisterRequest;
 import br.com.adotepeton.adotepeton.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
