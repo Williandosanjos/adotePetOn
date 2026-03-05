@@ -41,6 +41,14 @@ public class JwtService {
                 .getPayload();
     }
 
+    public String extractRole(String token) {
+        return extractAllClaims(token).getSubject();
+    }
+
+    public boolean isTokenExpired(String token) {
+        return extractAllClaims(token).getExpiration().before(new Date());
+    }
+
     public boolean isTokenValid(String token, String username) {
         return extractUsername(token).equals(username);
     }
