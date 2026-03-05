@@ -5,7 +5,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
-
 import javax.crypto.SecretKey;
 import java.util.Date;
 
@@ -33,16 +32,17 @@ public class JwtService {
         return extractAllClaims(token).getSubject();
     }
 
+    public String extractRole(String token) {
+        Object role = extractAllClaims(token).get("role");
+        return role == null ? null : role.toString();
+    }
+
     private Claims extractAllClaims(String token) {
         return Jwts.parser()
                 .verifyWith(secretKey)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-    }
-
-    public String extractRole(String token) {
-        return extractAllClaims(token).getSubject();
     }
 
     public boolean isTokenExpired(String token) {
