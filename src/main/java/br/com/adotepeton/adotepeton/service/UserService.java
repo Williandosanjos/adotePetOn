@@ -3,15 +3,14 @@ package br.com.adotepeton.adotepeton.service;
 import br.com.adotepeton.adotepeton.domain.entity.User;
 import br.com.adotepeton.adotepeton.domain.enums.Role;
 import br.com.adotepeton.adotepeton.domain.repository.UserRepository;
-import br.com.adotepeton.adotepeton.dto.AuthResponse;
-import br.com.adotepeton.adotepeton.dto.LoginRequest;
-import br.com.adotepeton.adotepeton.dto.RegisterRequest;
+import br.com.adotepeton.adotepeton.api.userDto.AuthResponse;
+import br.com.adotepeton.adotepeton.api.userDto.LoginRequest;
+import br.com.adotepeton.adotepeton.api.userDto.RegisterRequest;
 import br.com.adotepeton.adotepeton.exception.ResourceNotFoundException;
 import br.com.adotepeton.adotepeton.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
