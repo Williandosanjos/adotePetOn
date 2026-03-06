@@ -28,7 +28,3 @@ jobs:
 
       - name: Build and test
         run: mvn clean verify
-
-      - name: Submit dependency graph
-        if: github.event_name == 'push'
-        uses: advanced-security/maven-dependency-submission-action@v4
